@@ -8,7 +8,7 @@ BEGIN_LIBS = [
     "py7zr",
 ]
 
-MC_RUN_LIB = "--user portablemc[certifi]"
+MC_RUN_LIB = "portablemc"
 
 LAUNCHER_PATH = "C:\\FLauncher"
 LAUNCHER_GITHUB_URL = "https://github.com/MrFufl4ik/FLauncher.git"
@@ -21,11 +21,17 @@ def is_windows():
         return False
 
 
-def install_python_libs(libs: list):
-    for lib in libs:
-        print(f"Устанавливаю библиотеку python: {lib}")
-        os.system(f"{PIP_INSTALL_CMD} {lib}")
-        print("Успешно")
+def install_python_libs(libs: list, user = False):
+    if not user:
+        for lib in libs:
+            print(f"Устанавливаю библиотеку python: {lib}")
+            os.system(f"{PIP_INSTALL_CMD} {lib}")
+            print("Успешно")
+    else:
+        for lib in libs:
+            print(f"Устанавливаю библиотеку python: {lib}")
+            os.system(f"{PIP_INSTALL_CMD} --user {lib}[certifi]")
+            print("Успешно")
 
 
 def git_clone(path: str):
@@ -41,7 +47,7 @@ def win_install():
     install_python_libs(BEGIN_LIBS)
     print("Начальные библиотеки установлены...")
 
-    install_python_libs([MC_RUN_LIB])
+    install_python_libs([MC_RUN_LIB],True)
     folder_path = Path(f"C:\\Users\\{os.getlogin()}\\AppData\\Roaming\\Python")
     folders = [f for f in folder_path.iterdir() if f.is_dir()]
     folder_names = [str(folder) for folder in folders]
