@@ -1,5 +1,4 @@
 import os
-import winreg
 
 PIP_INSTALL_CMD = "pip install"
 
