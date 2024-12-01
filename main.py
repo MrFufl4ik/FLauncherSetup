@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 PIP_INSTALL_CMD = "pip install"
 
@@ -39,10 +40,16 @@ def win_install():
     print(f"Начало установки для: {os.name}")
     install_python_libs(BEGIN_LIBS)
     print("Начальные библиотеки установлены...")
+
     install_python_libs([MC_RUN_LIB])
-    win_set_path(f"C:\\Users\\{os.getlogin()}\\AppData\\Roaming\\Python\\Python313\\Scripts")
-    os.makedirs(LAUNCHER_PATH)
-    git_clone(LAUNCHER_PATH)
+    folder_path = Path(f"C:\\Users\\{os.getlogin()}\\AppData\\Roaming\\Python")
+    folders = [f for f in folder_path.iterdir() if f.is_dir()]
+    folder_names = [str(folder) for folder in folders]
+
+    win_set_path(f"{folder_path}\\{folder_names[0]}\\Scripts")
+    if not os.path.exists(LAUNCHER_PATH):
+        os.makedirs(LAUNCHER_PATH)
+        git_clone(LAUNCHER_PATH)
 
 
 def main():
