@@ -32,7 +32,7 @@ def git_clone(path: str):
 
 
 def win_set_path(path: str):
-    os.system(f"setx PATH %PATH%;{path}");
+    os.system(f"fsetx /M PATH \"%PATH%;{path}\"");
 
 
 def win_install():
@@ -40,7 +40,7 @@ def win_install():
     install_python_libs(BEGIN_LIBS)
     print("Начальные библиотеки установлены...")
     install_python_libs([MC_RUN_LIB])
-    win_set_path(f"C:\\Users\\{os.getlogin()}\\AppData\\Roaming\\Python\\Python312\\Scripts")
+    win_set_path(f"C:\\Users\\{os.getlogin()}\\AppData\\Roaming\\Python\\Python313\\Scripts")
     os.makedirs(LAUNCHER_PATH)
     git_clone(LAUNCHER_PATH)
 
